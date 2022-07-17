@@ -28,12 +28,14 @@ RUN git clone --quiet --branch $tag --depth 1 https://github.com/ONLYOFFICE/sdkj
 RUN git clone --quiet --branch $tag --depth 1 https://github.com/ONLYOFFICE/web-apps.git    /build/web-apps
 RUN git clone --quiet --branch $tag --depth 1 https://github.com/ONLYOFFICE/server.git      /build/server
 
-COPY server-org.patch /build/
+COPY server-rw.patch /build/
 COPY web-apps-rw.patch /build/
 
 
-RUN cd /build/server   && git apply -v --whitespace=warn /build/server-org.patch
+RUN cd /build/server   && git apply -v --whitespace=warn /build/server-rw.patch
 RUN cd /build/web-apps && git apply -v --whitespace=warn /build/web-apps-rw.patch
+
+#CMD [BASH]
 
 ## Build
 FROM clone-stage as build-stage
